@@ -20,15 +20,15 @@ const group = new aws.ec2.SecurityGroup('app-security', {
   ],
 })
 
-const userData = `#!/bin/bash
-mkdir actions-runner && cd actions-runner
-curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz
-tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz
-./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGLH7WKQAKFYZ4JO4T262ENDK --unattended
-sudo ./svc.sh install
-sudo ./svc.sh start
-`
+const userData = (name: string) => `#!/bin/bash
+mkdir ${name} && cd ${name}
 
+`
+// curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz
+// tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz
+// ./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGLH7WKQAKFYZ4JO4T262ENDK --unattended
+// sudo ./svc.sh install
+// sudo ./svc.sh start
 const createInstance = function (
   name: string,
   size: pulumi.Input<aws.ec2.InstanceType>
@@ -38,13 +38,13 @@ const createInstance = function (
     instanceType: size,
     vpcSecurityGroupIds: [group.id], // reference the group object above
     ami: 'ami-085925f297f89fce1',
-    userData: userData, // start a simple web server
+    userData: userData(name), // start a simple web server
     keyName: 'test-key',
   })
 }
 
-const agentOne = createInstance('agent-1', 't2.micro')
-const agentTwo = createInstance('agent-2', 't2.micro')
+const agentOne = createInstance('agents-1', 't2.micro')
+const agentTwo = createInstance('agents-2', 't2.micro')
 
 // Create an AWS resource (S3 Bucket)
 const bucket = new aws.s3.Bucket('my-bucket')
