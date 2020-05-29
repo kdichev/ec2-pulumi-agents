@@ -3,9 +3,8 @@ import * as aws from '@pulumi/aws'
 import * as awsx from '@pulumi/awsx'
 
 const config = new pulumi.Config()
-console.log(config)
 
-let group = new aws.ec2.SecurityGroup('app-security', {
+const group = new aws.ec2.SecurityGroup('app-security', {
   description: 'Enable HTTP and SSH access',
   ingress: [
     {
@@ -21,13 +20,13 @@ let group = new aws.ec2.SecurityGroup('app-security', {
   ],
 })
 
-let userData = `#!/bin/bash
+const userData = `#!/bin/bash
 mkdir actions-runner && cd actions-runner
 curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz
 tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz
-./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGJUWQVY335EGMNVT4C62D5OK
-./svc.sh install
-./svc.sh start
+./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGIGVH3FKT6KZDVBPBK62EMAK --unattended
+sudo ./svc.sh install
+sudo ./svc.sh start
 `
 
 const createInstance = function (
@@ -44,7 +43,8 @@ const createInstance = function (
   })
 }
 
-const hasuraInstance = createInstance('build-agent-1', 't2.micro')
+const agentOne = createInstance('agent-1', 't2.micro')
+const agentTwo = createInstance('agent-2', 't2.micro')
 
 // Create an AWS resource (S3 Bucket)
 const bucket = new aws.s3.Bucket('my-bucket')
