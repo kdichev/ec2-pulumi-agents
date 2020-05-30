@@ -29,7 +29,7 @@ sudo curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/act
 ls
 sudo tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz;
 ls
-./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGKGKUPQJMCX536M3CC62KLR2 --unattended;
+./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGNGBKQCXFYPIGSPUUK62KMQM --unattended;
 ls
 sudo ./svc.sh install;
 sudo ./svc.sh start;'`
