@@ -22,11 +22,14 @@ const group = new aws.ec2.SecurityGroup('app-security', {
 
 const createAgetUserData = (name: string, token: string) =>
   `#!/bin/bash
-su ubuntu -c 'mkdir agent && cd agent
+su ubuntu -c 'whoami;
+cd home/ubuntu;
+sudo mkdir agent && cd agent;
 curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz;
+ls
 tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz;
 ls
-./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGKHV3XDERVUXZGYR3S62KJT2 --unattended;
+./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGLZGKQM7FRRPICHRP262KLEM --unattended;
 ls
 ./svc.sh install;
 ./svc.sh start;'`
