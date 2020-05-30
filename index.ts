@@ -24,7 +24,9 @@ const createAgetUserData = (name: string, token: string) =>
   `#!/bin/bash
 curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz;
 tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz;
+ls
 ./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token ${token} --unattended;
+ls
 ./svc.sh install;
 ./svc.sh start;`
 
@@ -37,7 +39,7 @@ const createInstance = (
     instanceType: size,
     vpcSecurityGroupIds: [group.id], // reference the group object above
     ami: 'ami-085925f297f89fce1',
-    userData: createAgetUserData(name, 'AC52MGMDVSLVLRPRIMKGTCC62KEUS'), // start a simple web server
+    userData: createAgetUserData(name, 'AC52MGPB463XT5FCZ3JIRIC62KFQS'), // start a simple web server
     keyName: 'test-key',
   })
 
