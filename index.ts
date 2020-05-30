@@ -21,8 +21,7 @@ const group = new aws.ec2.SecurityGroup('app-security', {
 })
 
 const createAgetUserData = (name: string, token: string) =>
-  `#!/bin/bash;
-mkdir ${name} && cd ${name};
+  `#!/bin/bash
 curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz;
 tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz;
 ./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token ${token} --unattended;
