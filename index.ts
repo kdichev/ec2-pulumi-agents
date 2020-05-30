@@ -29,7 +29,7 @@ mkdir agent && cd agent
 curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz;
 tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz;
 ls
-./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGO333BBAD5KJABMBK262KIWA --unattended;
+./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGKHV3XDERVUXZGYR3S62KJT2 --unattended;
 ls
 ./svc.sh install;
 ./svc.sh start;`
