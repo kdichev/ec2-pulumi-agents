@@ -38,7 +38,7 @@ const createInstance = (
     instanceType: size,
     vpcSecurityGroupIds: [group.id], // reference the group object above
     ami: 'ami-085925f297f89fce1',
-    userData: createAgetUserData(name, 'AC52MGLH7WKQAKFYZ4JO4T262ENDK'), // start a simple web server
+    userData: createAgetUserData(name, 'AC52MGOAPG3GXB2IGAXZGQS62KB4U'), // start a simple web server
     keyName: 'test-key',
   })
 
