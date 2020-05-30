@@ -31,8 +31,8 @@ tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz;
 ls
 ./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGNGBKQCXFYPIGSPUUK62KMQM --unattended;
 ls
-./svc.sh install;
-./svc.sh start;'`
+sudo ./svc.sh install;
+sudo ./svc.sh start;'`
 
 const createInstance = (
   name: string,
