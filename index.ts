@@ -22,11 +22,13 @@ const group = new aws.ec2.SecurityGroup('app-security', {
 
 const createAgetUserData = (name: string, token: string) =>
   `#!/bin/bash
+whoami
+su - ubuntu
 mkdir agent && cd agent
 curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz;
 tar xzf ./actions-runner-linux-x64-2.262.1.tar.gz;
 ls
-./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token ${token} --unattended;
+./config.sh --url https://github.com/kdichev/ec2-pulumi-agents --token AC52MGNFTGSGEZIYZXACBNC62KHF2 --unattended;
 ls
 ./svc.sh install;
 ./svc.sh start;`
@@ -40,7 +42,7 @@ const createInstance = (
     instanceType: size,
     vpcSecurityGroupIds: [group.id], // reference the group object above
     ami: 'ami-085925f297f89fce1',
-    userData: createAgetUserData(name, 'AC52MGPB463XT5FCZ3JIRIC62KFQS'), // start a simple web server
+    userData: createAgetUserData(name, 'AC52MGNFTGSGEZIYZXACBNC62KHF2'), // start a simple web server
     keyName: 'test-key',
   })
 
