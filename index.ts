@@ -23,7 +23,7 @@ const group = new aws.ec2.SecurityGroup('app-security', {
 const createAgetUserData = (name: string, token: string) =>
   `#!/bin/bash
 whoami
-su - ubuntu
+sudo su - ubuntu
 whoami
 mkdir agent && cd agent
 curl -O -L https://github.com/actions/runner/releases/download/v2.262.1/actions-runner-linux-x64-2.262.1.tar.gz;
