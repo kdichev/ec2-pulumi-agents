@@ -51,7 +51,34 @@ const createInstance = (
 const agentOne = createInstance('agents-1', 't2.micro')
 
 // Create an AWS resource (S3 Bucket)
-const bucket = new aws.s3.Bucket('my-bucket')
+const bucket = new aws.s3.Bucket('my-bucket', {
+  website: {
+    indexDocument: 'public/index.html',
+  },
+})
 
-// Export the name of the bucket
+function publicReadPolicyForBucket(bucketName: string) {
+  return JSON.stringify({
+    Version: '2012-10-17',
+    Statement: [
+      {
+        Effect: 'Allow',
+        Principal: '*',
+        Action: ['s3:GetObject'],
+        Resource: [
+          `arn:aws:s3:::${bucketName}/*`, // policy refers to bucket name explicitly
+        ],
+      },
+    ],
+  })
+}
+
+// Set the access policy for the bucket so all objects are readable
+let bucketPolicy = new aws.s3.BucketPolicy('bucketPolicy', {
+  bucket: bucket.bucket, // depends on siteBucket -- see explanation below
+  policy: bucket.bucket.apply(publicReadPolicyForBucket),
+  // transform the siteBucket.bucket output property -- see explanation below
+})
+
 export const bucketName = bucket.id
+export const websiteUrl = bucket.websiteEndpoint // output the endpoint as a stack output
