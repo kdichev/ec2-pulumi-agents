@@ -40,11 +40,11 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          FROM_PATH: .cache
+          FROM_PATH: app/.cache
           DEST_PATH: ${{ steps.aws_output.outputs.AWS_BUCKET_NAME }}
       - uses: opspresso/action-s3-sync@master
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          FROM_PATH: public
+          FROM_PATH: app/public
           DEST_PATH: ${{ steps.aws_output.outputs.AWS_BUCKET_NAME }}
