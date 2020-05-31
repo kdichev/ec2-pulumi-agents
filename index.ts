@@ -53,7 +53,7 @@ const agentOne = createInstance('agents-1', 't2.micro')
 // Create an AWS resource (S3 Bucket)
 const bucket = new aws.s3.Bucket('my-bucket', {
   website: {
-    indexDocument: 'public/index.html',
+    indexDocument: '/public/index.html',
   },
 })
 
