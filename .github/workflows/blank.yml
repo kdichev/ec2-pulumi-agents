@@ -30,9 +30,6 @@ jobs:
         with:
           name: pulumi
           path: pulumi.json
-      - run: |
-          echo ::set-output name=AWS_BUCKET_NAME::$(jq .bucketName pulumi.json)
-        id: aws_output
   build_step:
     needs: [provision_agents]
     runs-on: self-hosted
@@ -44,17 +41,20 @@ jobs:
       - uses: montudor/action-zip@v0.1.0
         with:
           args: unzip pulumi.zip
+      - run: |
+          echo ::set-output name=AWS_BUCKET_NAME::$(jq .bucketName pulumi.json)
+        id: aws_output
       - run: echo $AWS_BUCKET_NAME
       - run: yarn build
-      - uses: opspresso/action-s3-sync@master
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          FROM_PATH: app/.cache
-          DEST_PATH: ${{ steps.aws_output.outputs.AWS_BUCKET_NAME }}
-      - uses: opspresso/action-s3-sync@master
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          FROM_PATH: app/public
-          DEST_PATH: ${{ steps.aws_output.outputs.AWS_BUCKET_NAME }}
+      # - uses: opspresso/action-s3-sync@master
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     FROM_PATH: app/.cache
+      #     DEST_PATH: ${{ steps.aws_output.outputs.AWS_BUCKET_NAME }}
+      # - uses: opspresso/action-s3-sync@master
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     FROM_PATH: app/public
+      #     DEST_PATH: ${{ steps.aws_output.outputs.AWS_BUCKET_NAME }}
