@@ -51,11 +51,7 @@ const createInstance = (
 const agentOne = createInstance('agents-1', 't2.micro')
 
 // Create an AWS resource (S3 Bucket)
-const bucket = new aws.s3.Bucket('my-bucket', {
-  website: {
-    indexDocument: '/public/index.html',
-  },
-})
+const bucket = new aws.s3.Bucket('my-bucket')
 
 function publicReadPolicyForBucket(bucketName: string) {
   return JSON.stringify({
