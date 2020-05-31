@@ -37,8 +37,6 @@ jobs:
     needs: [provision_agents]
     runs-on: self-hosted
     steps:
-      - run: whoami
-      - run: echo $AWS_BUCKET_NAME
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
@@ -46,6 +44,7 @@ jobs:
       - uses: montudor/action-zip@v0.1.0
         with:
           args: unzip pulumi.zip
+      - run: echo $AWS_BUCKET_NAME
       - run: yarn build
       - uses: opspresso/action-s3-sync@master
         env:
